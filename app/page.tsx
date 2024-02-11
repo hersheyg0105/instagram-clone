@@ -8,7 +8,7 @@ export default function Home() {
       {/* <h1>Hi There</h1>
       <button>Click me</button>
       <div>This is the instagram clone build</div> */}
-      <ScreenSize></ScreenSize>
+      {/* <ScreenSize></ScreenSize> */}
 
       {/* Header Component */}
       <Header></Header>
