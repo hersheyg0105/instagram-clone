@@ -31,7 +31,7 @@ const Header = () => {
           ></Image>
         </div>
 
-        <div className=" relative w-10 h-10 lg:hidden flex-shrink-0 cursor-pointer items-center">
+        <div className=" relative w-10 h-10 lg:hidden flex-shrink-0 cursor-pointer items-center my-auto">
           <Image src={instagramCamera} fill={true} objectFit="contain"></Image>
         </div>
 
