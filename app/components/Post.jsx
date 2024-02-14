@@ -22,7 +22,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 const Post = ({ id, username, userImg, img, caption }) => {
-  console.log("I am in post");
+  //   console.log("I am in post");
   return (
     <div className=" bg-white my-7 border rounded-lg">
       {/* <h1>I am a post</h1>
