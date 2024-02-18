@@ -10,9 +10,12 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  pages: {
-    signIn: "/auth/signin",
-  },
+  secret: process.env.SECRET,
+  // pages: {
+  //   signIn: "/auth/signin",
+  // },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
+// export default NextAuth(authOptions);

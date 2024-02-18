@@ -2,6 +2,8 @@ import Image from "next/image";
 import ScreenSize from "./components/ScreenSize";
 import Header from "./components/Header";
 import Feed from "./components/Feed";
+import GoogleButton from "react-google-button";
+import { signIn } from "next-auth/react";
 
 export default function Home() {
   return (
@@ -12,6 +14,11 @@ export default function Home() {
       {/* <ScreenSize></ScreenSize> */}
 
       {/* Header Component */}
+      {/* <GoogleButton
+        onClick={() => {
+          signIn("google");
+        }}
+      /> */}
       <Header></Header>
 
       {/* Feed Component */}

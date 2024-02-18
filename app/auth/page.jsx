@@ -9,8 +9,8 @@ const signIn = () => {
   );
 };
 
-export async function getServerSideProps() {
-  const providers = getProviders();
-}
+// export async function getServerSideProps() {
+//   const providers = getProviders();
+// }
 
 export default signIn;
