@@ -21,9 +21,10 @@ import { HomeIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 
 const Header = () => {
-  const { data } = useSession();
+  const { data: session, status } = useSession();
   console.log("Im printing session");
-  console.log("data object:", data);
+  console.log("data object:", session);
+  console.log("SMD");
 
   return (
     <div className=" shadow-sm border-b-2 bg-white sticky top-0 z-50">
