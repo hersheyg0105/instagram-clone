@@ -18,9 +18,14 @@ const SignInButton = () => {
             className="w-80"
           />
         </div>
-        <div className="mt-20">
+        <div className="mt-20 flex bg-blue-400 rounded-lg p-3">
+          <img
+            src="https://cdn.iconscout.com/icon/free/png-256/free-google-1772223-1507807.png"
+            alt="Google Icon"
+            className="w-12 object-contain bg-white rounded-full p-2"
+          />
           <button
-            className="p-3 bg-blue-400 rounded-lg text-white"
+            className="p-3   text-white"
             onClick={() => signIn("google", { callbackUrl: "/" })}
             type="button"
           >
