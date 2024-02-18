@@ -2,8 +2,16 @@ import Image from "next/image";
 import ScreenSize from "./components/ScreenSize";
 import Header from "./components/Header";
 import Feed from "./components/Feed";
+import GoogleButton from "react-google-button";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log("printing session in Home component");
+  console.log(session);
   return (
     <div className="bg-gray-50 h-screen overflow-y-scroll scrollbar-hide">
       {/* <h1>Hi There</h1>
@@ -12,6 +20,11 @@ export default function Home() {
       {/* <ScreenSize></ScreenSize> */}
 
       {/* Header Component */}
+      {/* <GoogleButton
+        onClick={() => {
+          signIn("google");
+        }}
+      /> */}
       <Header></Header>
 
       {/* Feed Component */}
