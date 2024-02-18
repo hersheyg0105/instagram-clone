@@ -2,7 +2,7 @@ import React from "react";
 
 const MiniProfile = () => {
   return (
-    <div className="flex items-center justify-between mt-14 ml-10">
+    <div className="flex items-center justify-between mt-14 ml-10 bg-red-400">
       {/* <h1>I am in mini feed</h1>
       <h1>whats up</h1> */}
       <img
