@@ -11,6 +11,19 @@ export const authOptions = {
     // ...add more providers here
   ],
   secret: process.env.SECRET,
+  pages: {
+    signIn: "/auth/signIn",
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.username = session.user.name
+        .split(" ")
+        .join("")
+        .toLocaleLowerCase();
+      session.user.uuid = token.sub;
+      return session;
+    },
+  },
   // pages: {
   //   signIn: "/auth/signin",
   // },
