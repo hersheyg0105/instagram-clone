@@ -5,6 +5,7 @@ import insta3 from "../pictures/insta3.png";
 import insta2 from "../pictures/insta2.png";
 import instagramLogo from "../pictures/instagramLogo.png";
 import instagramCamera from "../pictures/instagramCamera.png";
+import { getServerSession } from "next-auth/next";
 import {
   BeakerIcon,
   SearchIcon,
@@ -19,11 +20,10 @@ import {
 import { HomeIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 
-const Header = async () => {
-  const { data: session, status } = await useSession();
+const Header = () => {
+  const { data } = useSession();
   console.log("Im printing session");
-  console.log(session);
-  console.log(status);
+  console.log("data object:", data);
 
   return (
     <div className=" shadow-sm border-b-2 bg-white sticky top-0 z-50">
