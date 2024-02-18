@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import insta3 from "../pictures/insta3.png";
@@ -16,8 +17,14 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { HomeIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { useSession } from "next-auth/react";
 
-const Header = () => {
+const Header = async () => {
+  const { data: session, status } = await useSession();
+  console.log("Im printing session");
+  console.log(session);
+  console.log(status);
+
   return (
     <div className=" shadow-sm border-b-2 bg-white sticky top-0 z-50">
       <div className=" flex justify-between max-w-6xl mx-5 lg:mx-auto">
