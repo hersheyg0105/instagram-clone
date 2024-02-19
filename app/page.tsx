@@ -7,6 +7,9 @@ import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Modal from "./components/Modal";
+import ModalDaisy from "./components/ModalDaisy";
+import ModalHeadless from "./components/ModalHeadless";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -31,6 +34,9 @@ export default async function Home() {
       <Feed></Feed>
 
       {/* Modal Component */}
+      {/* <Modal></Modal>
+      // <ModalDaisy></ModalDaisy> */}
+      <ModalHeadless></ModalHeadless>
     </div>
   );
 }

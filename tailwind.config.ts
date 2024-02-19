@@ -24,6 +24,7 @@ const config: Config = {
     require("@tailwindcss/forms"),
     require("tailwind-scrollbar"),
     require("tailwind-scrollbar-hide"),
+    require("daisyui"),
   ],
 };
 export default config;
