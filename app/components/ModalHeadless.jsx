@@ -1,11 +1,31 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import { CameraIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 export default function ModalHeadless() {
   let [isOpen, setIsOpen] = useRecoilState(modalState);
+  const filePickerRef = useRef();
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const addImageToPost = (e) => {
+    console.log(e);
+
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result);
+    };
+
+    console.log("showing chosen image");
+    console.log(selectedFile);
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -43,12 +63,35 @@ export default function ModalHeadless() {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg leading-6 text-gray-900 text-center font-bold"
-                  >
-                    Create a Post
-                  </Dialog.Title>
+                  {selectedFile ? (
+                    <img
+                      src={selectedFile}
+                      alt="selected image"
+                      className="w-full object-contain cursor-pointer"
+                      onClick={() => setSelectedFile(null)}
+                    ></img>
+                  ) : (
+                    <div
+                      className="mt-1 mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 p-2"
+                      onClick={() => filePickerRef.current.click()}
+                    >
+                      <CameraIcon className=" text-blue-600 text-center justify-center"></CameraIcon>
+                    </div>
+                  )}
+
+                  <div className="mt-2 text-lg leading-6 text-gray-900 text-center font-bold">
+                    <h1>Upload a photo</h1>
+                  </div>
+
+                  <div className="mt-3">
+                    <input
+                      ref={filePickerRef}
+                      type="file"
+                      hidden
+                      onChange={addImageToPost}
+                    />
+                  </div>
+
                   <div className="mt-3">
                     <input
                       type="text"
