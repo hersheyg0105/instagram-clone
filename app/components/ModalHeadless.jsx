@@ -5,11 +5,56 @@ import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { CameraIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { db, storage } from "../../firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { useSession } from "next-auth/react";
+import { ref, getDownloadURL, uploadString } from "firebase/storage";
 
 export default function ModalHeadless() {
   let [isOpen, setIsOpen] = useRecoilState(modalState);
-  const filePickerRef = useRef();
+  const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const captionRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
+
+  const uploadPost = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    // 1. Create a post and add to firestore 'posts' collection
+    // 2. we get back the post id for newly created psot
+    // 3. upload the image to firebase storage with post id
+    // 4. get a download url from firebase storage and update the original post with image
+
+    const docRef = await addDoc(collection(db, "posts"), {
+      username: session.user.username,
+      caption: captionRef.current.value,
+      profileImg: session.user.image,
+      timestamp: serverTimestamp(),
+    });
+
+    console.log("New doc added with ID", docRef.id);
+    const imageRef = ref(storage, `posts/${docRef.id}/image`);
+    await uploadString(imageRef, selectedFile, "data_url").then(
+      async (snapshot) => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "posts", docRef.id), {
+          image: downloadURL,
+        });
+      }
+    );
+    setIsOpen(false);
+    setLoading(false);
+    setSelectedFile(false);
+  };
 
   const addImageToPost = (e) => {
     console.log(e);
@@ -97,16 +142,18 @@ export default function ModalHeadless() {
                       type="text"
                       placeholder="Please enter a caption..."
                       className="border-none focus:ring-0 w-full text-center"
+                      ref={captionRef}
                     />
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      disabled={!selectedFile}
+                      className="w-full inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed hover:disabled:bg-red-400"
+                      onClick={uploadPost}
                     >
-                      Upload Post
+                      {loading ? "Uploading... " : "Upload Post"}
                     </button>
                   </div>
                 </Dialog.Panel>
