@@ -25,10 +25,13 @@ import {
   Timestamp,
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import { db, storage } from "../../firebase";
@@ -38,6 +41,11 @@ const Post = ({ id, username, userImg, img, caption }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false);
+
+  // console.log("In post, the session user is ", session);
+  console.log("has liked value is: ", hasLiked);
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -64,9 +72,41 @@ const Post = ({ id, username, userImg, img, caption }) => {
     );
 
     return unsubscribe;
-  }, [db]);
+  }, [db, id]);
 
-  console.log("comments: ", comments);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "likes"),
+      (snapshot) => {
+        setLikes(snapshot.docs);
+      }
+    );
+
+    return unsubscribe;
+  }, [db, id]);
+
+  useEffect(() => {
+    setHasLiked(
+      likes.findIndex((like) => like.id === session?.user?.uuid) !== -1
+    );
+  }, [likes]);
+
+  const likePost = async () => {
+    // console.log("printing has liked: ", hasLiked);
+    // console.log("callig likePost");
+    if (hasLiked) {
+      console.log(
+        "Picture was already liked, now we are trying to delete the like"
+      );
+      await deleteDoc(doc(db, "posts", id, "likes", session.user.uuid));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session.user.uuid), {
+        username: session.user.username,
+      });
+    }
+  };
+
+  // console.log("comments: ", comments);
   return (
     <div className=" bg-white my-7 border rounded-lg">
       {/* <h1>I am a post</h1>
@@ -92,7 +132,15 @@ const Post = ({ id, username, userImg, img, caption }) => {
       {session && (
         <div className="flex items-center justify-between p-2">
           <div className=" flex gap-1">
-            <HeartIcon className="btn"></HeartIcon>
+            {hasLiked ? (
+              <HeartIconFilled
+                onClick={likePost}
+                className="btn text-red-500"
+              ></HeartIconFilled>
+            ) : (
+              <HeartIcon onClick={likePost} className="btn"></HeartIcon>
+            )}
+
             <ChatBubbleOvalLeftEllipsisIcon className="btn"></ChatBubbleOvalLeftEllipsisIcon>
             <PaperAirplaneIcon className="btn"></PaperAirplaneIcon>
           </div>
@@ -105,6 +153,9 @@ const Post = ({ id, username, userImg, img, caption }) => {
       {/* caption */}
       <div>
         <p className="p-3 truncate">
+          {likes.length > 0 && (
+            <p className="font-bold mb-1">{likes.length} likes</p>
+          )}
           <span className=" font-bold mr-1">{username}</span>
           {caption}
         </p>
