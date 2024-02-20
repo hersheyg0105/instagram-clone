@@ -6,7 +6,7 @@ const MiniProfile = () => {
   const { data: session } = useSession();
   console.log(session);
   return (
-    <div className="flex items-center justify-between mt-14 ml-10 bg-red-400">
+    <div className="flex items-center justify-between mt-14 ml-10">
       {/* <h1>I am in mini feed</h1>
       <h1>whats up</h1> */}
       <img
