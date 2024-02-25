@@ -17,9 +17,6 @@ export default async function Home() {
   // console.log(session);
   return (
     <div className="bg-gray-50 h-screen overflow-y-scroll scrollbar-hide">
-      {/* <h1>Hi There</h1>
-      <button>Click me</button>
-      <div>This is the instagram clone build</div> */}
       {/* <ScreenSize></ScreenSize> */}
 
       {/* Header Component */}
