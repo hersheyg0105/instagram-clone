@@ -97,7 +97,9 @@ const Header = () => {
               />
             </>
           ) : (
-            <button onClick={signIn}>Sign In</button>
+            <button onClick={signIn} className="text-black">
+              Sign In
+            </button>
           )}
         </div>
       </div>

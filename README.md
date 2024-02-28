@@ -1,29 +1,21 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Instagram Clone 2.0
 
-First, run the development server:
+Deployed Link: [https://instagram2-0.onrender.com/]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project is an Instagram clone with several key functionalities implemented to mimic the core features of the original platform. Users can sign in using Google authentication, upload pictures with captions, comment on posts, like posts, and more.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features
 
 1. Google Sign-In: Users can sign in using their Google accounts via a custom sign-in page.
 2. Image Upload: Users can upload pictures along with captions to share with their followers.
 3. Comments: Users can leave comments on posts, and the timestamp indicates how long ago the comment was posted.
 4. Likes: Users can like posts, showing their appreciation for the content.
 
-## Learn More
+## Technologies Used
 
 1. Next.js: Used for building the frontend and handling server-side rendering.
 2. Tailwind CSS: Utilized for styling the user interface with a responsive and modern design.
