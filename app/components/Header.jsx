@@ -15,6 +15,7 @@ import {
   PlusCircleIcon,
   UserGroupIcon,
   HeartIcon,
+  PhotoIcon,
 } from "@heroicons/react/24/outline";
 
 import { HomeIcon, Bars3Icon } from "@heroicons/react/24/solid";
@@ -72,7 +73,11 @@ const Header = () => {
             onClick={() => router.push("/")}
             className="navButton"
           ></HomeIcon>
-          <Bars3Icon className=" h-6 cursor-pointer md:hidden"></Bars3Icon>
+          {/* <Bars3Icon className=" h-6 cursor-pointer md:hidden"></Bars3Icon> */}
+          {/* <PhotoIcon
+            onClick={() => setOpen(true)}
+            className=" hidden h-6 sm:inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
+          ></PhotoIcon> */}
 
           {session ? (
             <>
@@ -83,10 +88,10 @@ const Header = () => {
                 </div>
               </div>
 
-              <PlusCircleIcon
+              <PhotoIcon
                 onClick={() => setOpen(true)}
-                className=" navButton"
-              ></PlusCircleIcon>
+                className=" navButton inline-flex"
+              ></PhotoIcon>
               <UserGroupIcon className=" navButton"></UserGroupIcon>
               <HeartIcon className=" navButton"></HeartIcon>
               <img
